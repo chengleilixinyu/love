@@ -1,6 +1,7 @@
-Gglobal_lei4   dx old one dy&dz new one
+Gglobal_lei4   dx old one dy&dz new one    stop at the step L=2254
 Gglobal_lei6   nx=300 ny=250 nz=250
-Gglobal_lei7  updatee  add: 
+Gglobal_lei7   stop at the step L=1840 
+updatee  add: 
 subroutine calculate_innerBD(e)
 use grid_data
 type(bvector_type),dimension(:),pointer :: e
