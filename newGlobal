@@ -1,4 +1,4 @@
 new
 dx=0.15,dy=0.15,dz=0.15;ens=8000;nsubreload=3;nsub=10------good!
 dx=0.15,dy=0.15,dz=0.15;ens=15000;nsubreload=3;nsub=10------bad!
-change 1000 to 2000 at line1492
+change 1000 to 4000 at line1492 loop 20 to 40
