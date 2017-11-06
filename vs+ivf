@@ -1,5 +1,5 @@
 1 error #8000: There is a conflict between local interface block and external interface block.
-console-属性-language use warning-check routine interface-no
+solution:console-属性-language use warning-check routine interface-no
 
 2 mpi configuration
 在64位平台下，在fortran/general面板里，增加mpich2的include目录C:\Program Files\MPICH2\include；
