@@ -1,0 +1,2 @@
+mpif90 -o hello hello.f90
+mpirun -np 4 hello
