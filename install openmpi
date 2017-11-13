@@ -1,0 +1,44 @@
+OpenMPI
+1) tar zxvf openmpi-1.10.3.tar.gz
+2) cd openmpi-1.10.3
+3) 
+gfortran and gcc case
+  ./configure -prefix=/usr/local/openmpi CXX=g++ CC=gcc FC=gfortran
+
+Intel Compiler case
+  ./configure -prefix=/usr/local/openmpi CXX=icpc CC=icc FC=ifort
+  or
+  ./configure -prefix=$HOME/openmpi CXX=icpc CC=icc FC=ifort
+  or 
+  ./configure -prefix=/usr/local/openmpi CXX=g++ CC=gcc FC=ifort
+  or
+  ./configure -prefix=$HOME/openmpi CXX=g++ CC=gcc FC=ifort
+4) make
+5) sudo make all install
+  make all install (-prefix=$HOME/openmpi case)
+6) gedit $HOME/.bahsrc
+----------
+  # openmpi-1.10.3
+  export MPIROOT=/usr/local/openmpi
+  export PATH=$MPIROOT/bin:$PATH
+  export LD_LIBRARY_PATH=$MPIROOT/lib:$LD_LIBRARY_PATH
+  export MANPATH=$MPIROOT/share/man:$MANPATH
+
+using
+/usr/local/openmpi/bin/mpif90
+/usr/local/openmpi/bin/mpicc
+/usr/local/openmpi/bin/mpicxx
+----------
+  # openmpi-1.10.3 (-prefix=$HOME/openmpi case)
+  export MPIROOT=$HOME/openmpi
+  export PATH=$MPIROOT/bin:$PATH
+  export LD_LIBRARY_PATH=$MPIROOT/lib:$LD_LIBRARY_PATH
+  export MANPATH=$MPIROOT/share/man:$MANPATH
+
+using
+$HOME/openmpi/bin/mpif90
+$HOME/openmpi/bin/mpicc
+$HOME/openmpi/bin/mpicxx
+---------
+
+Recompile: make clean, ./configure ..., make and sudo make install.
