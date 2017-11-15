@@ -1,3 +1,9 @@
+From Internet
+
+
+Intel Fortran
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 # the C compiler (Composer XE suite)
 export CC=icc
 # the C++ compiler, the intel one.
@@ -17,10 +23,6 @@ export CXXFLAGS="-O3 -xHost -axSSE4.2 -fPIC"
 # Linker flags
 export LDFLAGS="-Wl,-rpath=/opt/intel/lib -Wl,-rpath=/opt/intel/lib/intel64
 -i-dynamic"
-
-
-
-
 
 
 >tar -zxvf hdf5-1.x.x.tar.gz (in place of x.x. , put the version you are
@@ -44,3 +46,36 @@ Next, for NETCDF, configure with necessary options:
 >./configure --prefix=/usr/local/netcdf --disable-dap --enable-netcdf4
 --with-hdf5=/path-to-hdf5/hdf5 (note the default install root is
 /usr/local, and for this you need not use the --prefix argument)
+
+
+Gfortran
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+export F77=gfortran
+export FC=gfortran
+export CC=gcc
+export CXX=g++
+export CFLAGS=-fPIC
+
+export fld_install=/home/nam/apps/netcdf #change this to your folder
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+download netcdf-fortran
+
+##### install zlib
+./configure --prefix=$fld_install; make clean; make all install
+##### install hdf5
+./configure --prefix=$fld_install --with-zlib=$fld_install --enable-fortran
+--enable-cxx; make clean; make all install
+##### install netcdf
+LDFLAGS=-L$fld_install/lib CPPFLAGS=-I$fld_install/include \
+./configure --prefix=$fld_install --enable-fortran
+--enable-cxx; make clean; make all install
+
+3. export variables to .bashrc
+#NETCDF
+export NETCDF=/home/nam/apps/netcdf
+export PATH=$NETCDF/bin:$PATH
+export NETCDF_INCDIR=$NETCDF/include 
+export NETCDF_LIBDIR=$NETCDF/lib
+export LD_LIBRARY_PATH=$NETCDF/lib:$LD_LIBRARY_PATH
+export PATH NETCDF
+
