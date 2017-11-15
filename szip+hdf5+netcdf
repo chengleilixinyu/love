@@ -1,0 +1,46 @@
+# the C compiler (Composer XE suite)
+export CC=icc
+# the C++ compiler, the intel one.
+export CXX=icpc
+# the Fortran 9X compiler.
+export FC=ifort
+# the Fortran 77 compiler. For intel, is just the fortran one.
+export F77=ifort
+# C Compiler flags
+export CFLAGS="-O3 -xHost -axSSE4.2 -fPIC"
+# F9X Compiler flags
+export FCFLAGS="-O3 -xHost -axSSE4.2 -fPIC"
+# F77 Compiler flags
+export FFLAGS="-O3 -xHost -axSSE4.2 -fPIC"
+# CXX Compiler flags
+export CXXFLAGS="-O3 -xHost -axSSE4.2 -fPIC"
+# Linker flags
+export LDFLAGS="-Wl,-rpath=/opt/intel/lib -Wl,-rpath=/opt/intel/lib/intel64
+-i-dynamic"
+
+
+
+
+
+
+>tar -zxvf hdf5-1.x.x.tar.gz (in place of x.x. , put the version you are
+using)
+
+>cd hdf5-1.x.x.
+
+>./configure --prefix=/path-to-hdf5/hdf5-1.x.x. --enable-fortran
+--enable-cxx
+
+then
+
+>make
+
+and
+
+>make install
+
+Next, for NETCDF, configure with necessary options:
+
+>./configure --prefix=/usr/local/netcdf --disable-dap --enable-netcdf4
+--with-hdf5=/path-to-hdf5/hdf5 (note the default install root is
+/usr/local, and for this you need not use the --prefix argument)
