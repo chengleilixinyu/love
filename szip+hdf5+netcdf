@@ -55,7 +55,8 @@ export FC=gfortran
 export CC=gcc
 export CXX=g++
 export CFLAGS=-fPIC
-
+export FFLAGS=-fPIC
+export FCFLAGS=-fPIC
 export fld_install=/home/nam/apps/netcdf #change this to your folder
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 download netcdf-fortran
