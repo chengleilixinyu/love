@@ -1,1 +1,348 @@
-accp boundary caseglobal declare diagnos diagnos_nc getplasmadistribution gridgenerate ionosphere  main operators sendrecv setup updateUf
+ boundary caseglobal declare diagnos diagnos_nc getplasmadistribution gridgenerate ionosphere  main operators sendrecv setup updateUf
+ diff ./boundary.f90 ../new5tnew2/boundary.f90
+50c50
+<               n(m)%scalar =  max(2.*en(m)%scalar - enh(m)%scalar,minne*0.1)
+---
+>               n(m)%scalar =  max(2.*en(m)%scalar - enh(m)%scalar,minne)
+
+___________________________________________________________
+case_global
+
+620   +pif  +initialize_plasma_r initialize_bfield_r
+__________________________________________________________
+ diff ./getplasmadistribution.f90 ../new5tnew2/getplasmadistribution.f90
+492,500c492,500
+<      fx(m)%vector           = fx(m)%vector/max(een(m)%vector,ens*1.e-4)
+<      fy(m)%vector           = fy(m)%vector/max(een(m)%vector,ens*1.e-4)
+<      fz(m)%vector           = fz(m)%vector/max(een(m)%vector,ens*1.e-4)
+<      enkx(m)%vector         = abs(enkx(m)%vector/max(een(m)%vector,ens*1.e-4) - fx(m)%vector**2 )
+<      enky(m)%vector         = abs(enky(m)%vector/max(een(m)%vector,ens*1.e-4) - fy(m)%vector**2 )
+<      enkz(m)%vector         = abs(enkz(m)%vector/max(een(m)%vector,ens*1.e-4) - fz(m)%vector**2 )
+<      par(m)%vector          = fpa2(m)%vector/max(een(m)%vector, ens*1.e-4) - (fpa(m)%vector/max(een(m)%vector,ens*1.e-4))**2
+<      per1(m)%vector         = fpb2(m)%vector/max(een(m)%vector, ens*1.e-4) - (fpb(m)%vector/max(een(m)%vector,ens*1.e-4))**2
+<      per2(m)%vector         = fpc2(m)%vector/max(een(m)%vector, ens*1.e-4) - (fpc(m)%vector/max(een(m)%vector,ens*1.e-4))**2
+---
+>      fx(m)%vector           = fx(m)%vector/max(een(m)%vector,ens*1.e-3)
+>      fy(m)%vector           = fy(m)%vector/max(een(m)%vector,ens*1.e-3)
+>      fz(m)%vector           = fz(m)%vector/max(een(m)%vector,ens*1.e-3)
+>      enkx(m)%vector         = abs(enkx(m)%vector/max(een(m)%vector,ens*1.e-3) - fx(m)%vector**2 )
+>      enky(m)%vector         = abs(enky(m)%vector/max(een(m)%vector,ens*1.e-3) - fy(m)%vector**2 )
+>      enkz(m)%vector         = abs(enkz(m)%vector/max(een(m)%vector,ens*1.e-3) - fz(m)%vector**2 )
+>      par(m)%vector          = fpa2(m)%vector/max(een(m)%vector, ens*1.e-3) - (fpa(m)%vector/max(een(m)%vector,ens*1.e-3))**2
+>      per1(m)%vector         = fpb2(m)%vector/max(een(m)%vector, ens*1.e-3) - (fpb(m)%vector/max(een(m)%vector,ens*1.e-3))**2
+>      per2(m)%vector         = fpc2(m)%vector/max(een(m)%vector, ens*1.e-3) - (fpc(m)%vector/max(een(m)%vector,ens*1.e-3))**2
+_____________________________________________________________________________________________
+ diff ./gridgenerate.f90 ../new5tnew2/gridgenerate.f90
+172,177c172,174
+<                    case(11,13,23)
+<                      if(x >= -25.) dx = dx0;  !x<=-8
+<                          if(x <  -25. .and. x >= xmin) dx = dx*1.05
+<                        case(12)
+<                      if(x >= -35.) dx = dx0;  !x<=-8
+<                      if(x <  -35. .and. x >= xmin) dx = dx*1.02
+---
+>                    case(11,12,13,23)
+>                     if(x >= -25.) dx = dx0;  !x<=-8
+>                     if(x <  -25. .and. x >= xmin) dx = dx*1.05
+___________________________________________________
+ diff ./ionosphere.f90 ../new5tnew2/ionosphere.f90
+ 
+  diff ./operators.f90 ../new5tnew2/operators.f90
+93c93
+<   integer :: m,I,J,K,IP,JP,KP,im,jm,km,index
+---
+>   integer :: m,I,J,K,IP,JP,KP,index
+106,107c106
+<           km = max(k-1,block(m)%nz0)
+<               kp = min(k+1,block(m)%nz1)
+---
+>           kp = min(k+1,block(m)%nz1)
+109d107
+<              jm = max(j-1,block(m)%ny0)
+112d109
+<                 im = max(i-1,block(m)%nx0)
+123,132d119
+<
+<                     elseif(index == -1) then
+<                        b(m)%scalar(i,j,k) = (a(m)%scalar(i,j,k) - a(m)%scalar(im,j,k))/cdx(im,1)
+<                            if(i == 1 .and. nx > 2) b(m)%scalar(i,j,k) = (a(m)%scalar(2,j,k) - a(m)%scalar(1,j,k))/cdx(1,1)
+<                     elseif(index == -2) then
+<                        b(m)%scalar(i,j,k) = (a(m)%scalar(i,j,k) - a(m)%scalar(i,jm,k))/cdy(jm,1)
+<                            if(j == 1 .and. ny > 2) b(m)%scalar(i,j,k) = (a(m)%scalar(i,2,k) - a(m)%scalar(i,1,k))/cdy(1,1)
+<                     elseif(index == -3) then
+<                        b(m)%scalar(i,j,k) = (a(m)%scalar(i,j,k) - a(m)%scalar(i,j,km))/cdz(km,1)
+<                            if(k == 1 .and. nz > 2) b(m)%scalar(i,j,k) = (a(m)%scalar(i,j,2) - a(m)%scalar(i,j,1))/cdz(1,1)
+172,180c159,164
+<      do k = block(m)%k0,block(m)%k1p
+<           km = max(k-1,block(m)%nz0)
+<               kp = min(k+1,block(m)%nz1)
+<         do j = block(m)%j0,block(m)%j1p
+<              jm = max(j-1,block(m)%ny0)
+<                  jp = min(j+1,block(m)%ny1)
+<              do i = block(m)%i0,block(m)%i1p
+<                 im = max(i-1,block(m)%nx0)
+<                     ip = min(i+1,block(m)%nx1)
+---
+>      do i=block(m)%i0,block(m)%nx1
+>         im=max(block(m)%nx0,i-1);
+>         do j=block(m)%j0,block(m)%ny1
+>            jm=max(block(m)%ny0,j-1);
+>              do k=block(m)%k0,block(m)%nz1
+>               km=max(block(m)%nz0,k-1);
+191,203d174
+<
+<
+<                     elseif(index == -1) then
+<                        c(m)%scalar(i,j,k) = (a(m)%scalar(ip,j,k) - a(m)%scalar(i,j,k))/cdx(ip,2)
+<                            if(i == nxp .and. nx > 2) c(m)%scalar(i,j,k) = (a(m)%scalar(nxp,j,k) - a(m)%scalar(nx,j,k))/cdx(nxp,2)
+<                     elseif(index == -2) then
+<                        c(m)%scalar(i,j,k) = (a(m)%scalar(i,jp,k) - a(m)%scalar(i,j,k))/cdy(jp,2)
+<                            if(j == nyp .and. ny > 2) c(m)%scalar(i,j,k) = (a(m)%scalar(i,nyp,k) - a(m)%scalar(i,ny,k))/cdy(nyp,2)
+<                     elseif(index == -3) then
+<                        c(m)%scalar(i,j,k) = (a(m)%scalar(i,j,kp) - a(m)%scalar(i,j,k))/cdz(kp,2)
+<                            if(k == nzp .and. nz > 2) c(m)%scalar(i,j,k) = (a(m)%scalar(i,j,nzp) - a(m)%scalar(i,j,nz))/cdz(nzp,2)
+<
+<
+462,505d432
+<       subroutine partialb(a,m,b)
+<          use constants
+<                use grid_data
+<            type(bscalar_type), dimension(:), pointer    :: a,b
+<            integer :: m
+<       end subroutine partialb
+<       subroutine allocate_bscalar(c,m)
+<         use constants
+<               use grid_data
+<           type(bscalar_type), dimension(:), pointer    :: c
+<               integer :: m
+<       end subroutine allocate_bscalar
+<   end interface
+<   call allocate_bscalar(rho,1)
+<   call allocate_bscalar(c,1)
+<   do m=1,mblocks
+<      b(m)%scalar   = 0.
+<   enddo
+<   do n =1,3
+<      do m=1,mblocks
+<         rho(m)%scalar = a(m)%vector(n,:,:,:)
+<      enddo
+<      call partialb(rho,-n,c)
+<        do m=1,mblocks
+<         b(m)%scalar    = b(m)%scalar + c(m)%scalar
+<      enddo
+<   enddo
+<
+<   call allocate_bscalar(rho,-1)
+<   call allocate_bscalar(c,-1)
+<   return
+< end subroutine divb
+< !-------------------------------------------------------------------------
+< subroutine dive(a,b)
+<   use parameters
+<   use grid_data
+<   use gridCoefficient
+<   implicit none
+<   include 'mpif.h'
+<   type(bvector_type), dimension(:), pointer    :: a
+<   type(bscalar_type), dimension(:), pointer    :: b,rho,c
+<   integer :: m,n
+<
+<   interface
+528c455
+<      call partiale(rho,-n,c)
+---
+>      call partiale(rho,n,c)
+537c464
+< end subroutine dive
+---
+> end subroutine divb
+801c728
+< ! a is on the bcenter and output b is on bcell
+---
+>
+843,902d769
+< ! a, and cc on the ecenter and the output b is on the ecell
+< subroutine  CAL_grade(a,cc,b)
+<   use parameters
+<   use gridCoefficient
+<   use grid_data
+<   implicit none
+<   include 'mpif.h'
+<   type(bscalar_type), dimension(:), pointer    :: a,cc,c
+<   type(bvector_type), dimension(:), pointer    :: b
+<   integer :: i,j,k,ip,im,jp,jm,kp,km,m,n
+<   interface
+<       subroutine allocate_bscalar(c,m)
+<         use constants
+<               use grid_data
+<           type(bscalar_type), dimension(:), pointer    :: c
+<               integer :: m
+<       end subroutine allocate_bscalar
+<       subroutine mpi_sdrv_vector(a,m)
+<          use constants
+<                use grid_data
+<            type(bvector_type), dimension(:), pointer    :: a
+<            integer :: m
+<       end subroutine mpi_sdrv_vector
+<       subroutine partiale(a,m,b)
+<          use constants
+<                use grid_data
+<            type(bscalar_type), dimension(:), pointer    :: a,b
+<            integer :: m
+<       end subroutine partiale
+<   end interface
+<
+<   call allocate_bscalar(c,1)
+<   do n=1,3
+<      call partiale(a,n,c)
+<      do m=1,mblocks
+<           if(n==1) then
+<                  do i=block(m)%nx0,block(m)%nx1
+<                     ip = min(i+1,block(m)%nx1)
+<                 b(m)%vector(n,i,:,:) = c(m)%scalar(i,:,:)*2./max(cc(m)%scalar(i,:,:)+cc(m)%scalar(ip,:,:),1.e-5)
+<            enddo
+<               endif
+<           if(n==2) then
+<                  do j=block(m)%ny0,block(m)%ny1
+<                     jp = min(j+1,block(m)%ny1)
+<                 b(m)%vector(n,:,j,:) = c(m)%scalar(:,j,:)*2./max(cc(m)%scalar(:,j,:)+cc(m)%scalar(:,jp,:),1.e-5)
+<            enddo
+<               endif
+<           if(n==3) then
+<                  do k=block(m)%nz0,block(m)%nz1
+<                     kp = min(k+1,block(m)%nz1)
+<                 b(m)%vector(n,:,:,k) = c(m)%scalar(:,:,k)*2./max(cc(m)%scalar(:,:,k)+cc(m)%scalar(:,:,kp),1.e-5)
+<            enddo
+<               endif
+<        enddo
+<   enddo
+<   call allocate_bscalar(c,-1)
+<   call mpi_sdrv_vector(b,0)
+<  return
+< end subroutine CAL_grade
+< !-------------------------------------------------------------------------
+968,969c835
+<                        pp1 = -dt * (v(m)%vector(1,i,j,k)+v(m)%vector(1,im,j,k))/2. &
+<                                          * (1 -(v(m)%vector(1,i,j,k) -v(m)%vector(1,im,j,k))/cdx(im,1)*dt/2.)
+---
+>                        pp1 = -dt * v(m)%vector(1,i,j,k) * (1 -(v(m)%vector(1,i,j,k) -v(m)%vector(1,im,j,k))/cdx(im,1)*dt)
+971,972c837
+<                        pp1 = -dt * (v(m)%vector(1,i,j,k)+v(m)%vector(1,ip,j,k))/2. &
+<                                          * (1 -(v(m)%vector(1,ip,j,k) -v(m)%vector(1,i,j,k))/cdx(i,1)*dt/2.)
+---
+>                        pp1 = -dt * v(m)%vector(1,i,j,k) * (1 -(v(m)%vector(1,ip,j,k) -v(m)%vector(1,i,j,k))/cdx(i,1)*dt)
+975,976c840
+<                        pp2 = -dt * (v(m)%vector(2,i,j,k)+v(m)%vector(2,i,jm,k))/2. &
+<                                          * (1 -(v(m)%vector(2,i,j,k) -v(m)%vector(2,i,jm,k))/cdy(jm,1)*dt/2.)
+---
+>                        pp2 = -dt * v(m)%vector(2,i,j,k) * (1 -(v(m)%vector(2,i,j,k) -v(m)%vector(2,i,jm,k))/cdy(jm,1)*dt)
+978,979c842
+<                        pp2 = -dt * (v(m)%vector(2,i,j,k)+v(m)%vector(2,i,jp,k))/2. &
+<                                          * (1 -(v(m)%vector(2,i,jp,k) -v(m)%vector(2,i,j,k))/cdy(j,1)*dt/2.)
+---
+>                        pp2 = -dt * v(m)%vector(2,i,j,k) * (1 -(v(m)%vector(2,i,jp,k) -v(m)%vector(2,i,j,k))/cdy(j,1)*dt)
+982,983c845
+<                        pp3 = -dt * (v(m)%vector(3,i,j,k)+v(m)%vector(3,i,j,km))/2. &
+<                                          * (1 -(v(m)%vector(3,i,j,k) -v(m)%vector(3,i,j,km))/cdz(km,1)*dt/2.)
+---
+>                        pp3 = -dt * v(m)%vector(3,i,j,k) * (1 -(v(m)%vector(3,i,j,k) -v(m)%vector(3,i,j,km))/cdz(km,1)*dt)
+985,986c847
+<                        pp3 = -dt * (v(m)%vector(3,i,j,k)+v(m)%vector(3,i,j,kp))/2. &
+<                                          * (1 -(v(m)%vector(3,i,j,kp) -v(m)%vector(3,i,j,k))/cdz(k,1)*dt/2.)
+---
+>                        pp3 = -dt * v(m)%vector(3,i,j,k) * (1 -(v(m)%vector(3,i,j,kp) -v(m)%vector(3,i,j,k))/cdz(k,1)*dt)
+2187,2200d2047
+< ! -----------------------------------------------------------------------
+< !==============================================================================
+< ! divb correction to keep divB=0
+< ! b_new= b_old + D * grad(div Bold)
+< subroutine divb_corr(cc)
+<   use parameters
+<   use grid_data
+<   use gridCoefficient
+<   use globalcase
+<   implicit none
+<   include 'mpif.h'
+<   type(bvector_type), dimension(:), pointer    :: cc,vec1
+<   type(bscalar_type), dimension(:), pointer    :: rho
+<
+2202,2246d2048
+<   integer  :: m
+<   interface
+<       subroutine allocate_bscalar(c,m)
+<         use constants
+<               use grid_data
+<           type(bscalar_type), dimension(:), pointer    :: c
+<               integer :: m
+<       end subroutine allocate_bscalar
+<       subroutine allocate_bvector(c,m)
+<         use constants
+<               use grid_data
+<           type(bvector_type), dimension(:), pointer    :: c
+<               integer :: m
+<       end subroutine allocate_bvector
+<        subroutine divb(a,b)
+<         use constants
+<               use grid_data
+<           type(bscalar_type), dimension(:), pointer    :: b
+<           type(bvector_type), dimension(:), pointer    :: a
+<        end subroutine divb
+<
+<        subroutine CAL_grad(a,b)
+<         use constants
+<               use grid_data
+<           type(bscalar_type), dimension(:), pointer    :: a
+<           type(bvector_type), dimension(:), pointer    :: b
+<        end subroutine CAL_grad
+<
+<   end interface
+< !---------------------
+<
+<
+<   call allocate_bvector(vec1,3)
+<   call allocate_bscalar(rho,1)
+<
+<   call divb(cc,rho)    !b-center
+<   call CAL_grad(rho,vec1)   !b-center
+<   do m=1,mblocks
+<      cc(m)%vector = cc(m)%vector + D_corrB * vec1(m)%vector
+<   enddo
+<   call allocate_bvector(vec1,-1)
+<   call allocate_bscalar(rho,-1)
+<
+<   return
+< end subroutine divb_corr
+_______________________________________________________________________
+83c83
+<         dr   = Rimag2 - Rmin
+---
+>         dr   = Rimag2 -Rmin
+242c242
+<   thetab  = asin(sqrt(rion/(rmin-1.5) )) !*180./pi
+---
+>   thetab  = asin(sqrt(rion/rmin)) !*180./pi
+____________________________________________
+ diff ./setup.f90 ../new5tnew2/setup.f90
+555d554
+<   call allocate_bscalar(pif,1)
+615d613
+<   call allocate_bvector(gradpi,3)
+689,701d686
+<
+<
+<   dim1  = dx0
+<   dim2  = dy0
+<   dim3  = dz0
+<
+<
+<   if(nx<=1) dim1 = 1.e10
+<   if(ny<=1) dim2 = 1.e10
+<   if(nz<=1) dim3 = 1.e10
+<   D_corrB =  0.3888888889 / (1./dim1**2 + 1./dim2**2 + 1./dim3**2)
+<
+<
+______________________________________________
+diff ./updateUf.f90 ../new5tnew2/updateUf.f90
+
++ecenter2ecell dive........
+
