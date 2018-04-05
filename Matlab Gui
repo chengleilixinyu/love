@@ -1,0 +1,2 @@
+Question:GUI界面上面显示不全
+Solution:GUI IDE 打开fig，右键界面的属性中将resize 设置为on。不行的话再将units设置为normalized
