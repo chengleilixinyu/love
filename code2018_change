@@ -1,0 +1,3 @@
+In the equation below,  it seems the unit of nnt is different from bsq(m)%vector*dtp/block(m)%node%ddm**2*ai.(main.f90)
+change from nnt(m)%vector    =  max(nnt(m)%vector,bsq(m)%vector*dtp/block(m)%node%ddm**2*ai)
+to nnt(m)%vector    =  max(nnt(m)%vector,bsq(m)%vector*dtp**2/block(m)%node%ddm**2*ai)
