@@ -1,0 +1,7 @@
+block(m)%ion%XV(1,L): x
+block(m)%ion%XV(2,L): y
+block(m)%ion%XV(3,L): z
+block(m)%ion%XV(4,L): VX0
+block(m)%ion%XV(5,L): VY0
+block(m)%ion%XV(6,L): VZ0
+index  =   INT(block(m)%ion%XV(0,L)+0.2) 
