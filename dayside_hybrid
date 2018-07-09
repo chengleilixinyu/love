@@ -1,2 +1,2 @@
- ALLOCATE(XV(-2:9,NPTPE)  nptpe should be large ; change number of NPT.
+ ALLOCATE(XV(-2:9,NPTPE)  nptpe should be large ; change number of NPT.----maind.f90 line 367
  
