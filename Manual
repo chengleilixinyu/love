@@ -1,0 +1,162 @@
+&SimParameters
+! domain parameters
+  NX           = 300 !58 !194 !192 !200, 
+  NY           = 250 !57 !157 !157 !65, 
+  NZ           = 250 !53 !191 !191 !65, 
+  NB           = 1,
+  NXB          = 0, 0 ,
+  NYB          = 0, 0,
+  NZB          = 0, 0
+  nxskip       = 1 
+  nyskip       = 1 
+  nzskip       = 1
+  Dx0          = 2.0  !0.2  !0.5
+  Dy0          = 2.0  !0.3  !1.0
+  Dz0          = 2.0  !0.2  !1.0
+! simulation control parameters
+  irun         = -1  !-1 new run
+  SimTypei     = 13     !0-unifm; 1-beam; 2-shock; 3-kaws, 4-Aws  5-reconnection  11-Global by MHD
+  ibounds      = 2, 1,  2, 2,  2, 2      !0-pero,1-fixed, 2-free, 3-conduct
+  stdout       = 21  ! or 21
+  dtime        = 0.05
+  ens          = 100.0
+  emr          = 0.0005  ! electron proton mass ratiao
+  nstep        = 4001
+  nsub         = 10 !substep
+  RestartIndex = 2 
+  Ilinear      = 0
+  Idf          = 0
+  Lamdai       = 0.1
+  ifSmooth     = 1     !smoothing index
+  ifFilter     = 0
+  ifBDdecay    = 1 
+  electroState = 1
+  Teti         = 2
+  Gpath        = 'project/'
+  ploading     = 0
+  enu0         = 0.1, 0.005, 0.1,  0.0001, 0.02    !resistivity of enu0,enuc,enuj,enuf,enuf0, 
+! domain decompositions
+  kpex         = 1 
+  kpey         = 1
+  kpez         = 1 
+
+  kblockx      = 1   !17 !37       !domain decomposition in zeta direction
+  kblocky      = 1   ! 16 !17       !domain decomposition in zeta direction
+  kblockz      = 1   ! 16 !29       !domain decomposition in zeta direction
+
+  isend        = 0
+  q1           = 1.
+  q2           = 0.002
+  q3           = 0.006
+
+! particles species
+
+  skind        = 1, 
+  density      = 1.0, 0.05,      0.002,   1
+  aion         = 1,   4,         16,      1,
+  qion         = 1,   2,         6,       1,
+  Nweight      = 1,   0.25,      0.01,    1,
+  Vweight      = 1,   1,         1,       1,
+  Tweight      = 1,   1,         1,       1,
+  anisotropy   = 1,   1,         1,       1,
+  pinput       = 1,   0.001,     0.001,   1,    !1-everywher <1.0 partially 
+
+
+! uniform and beam-plasma interaction cases
+  bx0          = 0.0
+  by0          = 0.0
+  bz0          = 1.0
+  ux0          = 10.
+  uy0          = 0.
+  uz0          = 0. 
+  beta0        = 0.04    !0.004
+  pitchangle   = 90.
+  wpitchangle  = 60.
+
+! kaws case--------------------------------------
+  Pcurrent     = 0.333,0.666
+  Wcurrent     = 5.5,5.5
+  omega_kzVa   = 2.0
+  deltaU       = 0.2
+  en1          = 0.1
+  en2          = 1.
+  beta_kaw     = 0.5
+  pithangle    = 0.
+  phi_B1       = 0.
+  phi_B2       = 0.
+  m_akz        = 4.0
+  m_akx        = 1.0
+  tilt         = 0.
+  p_initial_set= 0.15
+  imhd         = 0
+  gamma        = 1.66667
+  ionmode      = 0
+  Ifilter0     = -1, 1, 1, 1, 2, 1, 1
+  Ifilter1     = -1, 1, 1, 1, 2, 1, 1
+  Tfilter      = 0.
+  deltaUd      = 0.0
+! test particles
+  T0_testparticles = 0.
+  P0_testparticles = 50,
+  V0_testparticles = 0.2
+  w0_testparticles = 10.0
+! shock case-------------------------------------
+  ma           = 5.   !8
+  beta_shock   = 0.1  !0.5
+  theta        = 60.  !80
+  anisoShock   = 1., 1.0
+! global case-------------------------------------
+  mion         = 120
+  nion         = 128 
+  ionsolver    = 0, !0-fft; 1-mgm sigma(0); 2-1-mgm sigma(t)
+  iniDate      = 2013,   1,    1,     0,      0,      0
+  bnvt_sw      = 0.,    0.,   -10.,  -700.,   0.,     0., 6.,   10.  !parameter in solar wind
+  bnvt_eq      = 37000.,.0,    0.,   2000.,   0.,     1.  !parameter in equator  31200
+  sigmap0      = 5.
+  sigmah0      = 10.
+  simDomain    = -60.,   20.,  -30.,  30.,    -30.,   30., 
+! simDomain    = -5.,   20., -20.,  20.,    -20.,   20.,
+  Rfpause      = 7.5
+  Wpause       = 2.
+  Rmin         = 3.5
+  rmpause      = 15.0
+  r0miro       = 15.0  !mirror dipole fileld
+  ioTsyi       = 1       !1-'T89'; 2-T96; 3-T01
+  tinjection   = 20000.
+/
+
+&changeparameters
+  nxd          = 41
+  nyd          = 31
+  nzd          = 31
+  digDomain    = -60.,   20., -30.,  30.,    -30.,   30., 
+! digDomain    = -60.,   20., -30.,  30.,    -30.,   30.,
+
+  nxdfine      = 41
+  nydfine      = 41
+  nzdfine      = 41
+  digDomainfine= -60.,   20., -30.,  30.,    -30.,   30.,
+
+
+  ndiagf       = 2
+  ndiagp       = 2000000
+  nreload      = 20       !
+  nB1smooth    = 2 
+  nsubreload   = 2        ! partilly reload particle @ n<nmin 2 x>18; 3 x>3
+  nwrite       = 14000     !12000       !14000     
+  epsibh1      = 1.e-4
+  enu0         = 0.1, 0.005, 0.2,  0.001, 0.002   !enu0,enuc,enuj,enuf,enuf0 
+  nsave        = 2     ! for global raw grids simulation case-13
+  ifoutputmc   = 0
+  ifsolarwind  = 0
+  nfield       = 20    ! first nfield arrays will be recorded
+  inetcdf      = 0
+!  DiagQuantity = 1,2,3,4,21,22,23,24,25,26,27,28,29,30,15,16,17,8,9,10 
+  DiagQuantity = 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20
+! Q    Bx  By  Bz N uix  uiy uiz Ex Ey Ez Tpar Tper Jpar Jper uex uey uez  Jx  Jy  Jz
+! Q    Bx  By  Bz N uix  uiy uiz Ex Ey Ez Tpar Tper Jpar Jper uex uey uez  Jx  Jy  Jz   NHa  VxHa  VyHa  VzHa   THa   NO  VxO  VyO  VzO   TO   
+! D    1   2   3  4  5    6   7  8  9  10  11   12  13    14   15  16  17  18  19  20   21    22    23    24    25     26   27   28   29    30
+
+/
+
+
