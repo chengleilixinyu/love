@@ -71,6 +71,12 @@ LDFLAGS=-L$fld_install/lib CPPFLAGS=-I$fld_install/include \
 ./configure --prefix=$fld_install --enable-fortran
 --enable-cxx; make clean; make all install
 
+
+##### install netcdf-fortran
+LDFLAGS=-L$fld_install/lib CPPFLAGS=-I$fld_install/include \
+./configure --prefix=$fld_install --enable-fortran
+--enable-cxx; make clean; make all install
+
 3. export variables to .bashrc
 #NETCDF
 export NETCDF=/home/nam/apps/netcdf
