@@ -1,2 +1,14 @@
 Question:GUI界面上面显示不全
 Solution:GUI IDE 打开fig，右键界面的属性中将resize 设置为on。不行的话再将units设置为normalized
+中文乱码---preferences将字体改成支持中文的字体--如monospaced
+英文乱码---fig双击编辑字体显示乱码---
+
+
+To open the Control Panel, use Microsoft Windows 10 documentation.
+1. From Clock, Language, and Region, select Change date, time or number formats.
+2. On the Formats tab, select a target locale from the Format drop-down list, and then click Apply. This action sets the
+user locale.
+3. On the Administrative tab, click the Change system locale... button.
+4. Select a target locale from the Current system locale drop-down list. This action sets the system locale.
+5. Exit each dialog box by clicking the Ok buttons.
+6. Restart the system
