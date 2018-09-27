@@ -1,0 +1,7 @@
+Linux scp 设置nohup后台运行
+
+1.正常执行scp命令
+2.输入ctrl + z 暂停任务
+3.bg将其放入后台: bg %1
+4.disown -h 将这个作业忽略HUP信号:disown -h %1
+5.测试会话中断，任务继续运行不受影响
