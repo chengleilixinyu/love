@@ -1,0 +1,1 @@
+ifbline yes  clean, not show lines; ifbline no  clean, reshow lines
