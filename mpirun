@@ -1,0 +1,6 @@
+我在集群上用openmpi运行程序时，出现警告提示，然后程序会一直卡住，但是简单的例程却可以正常运行，请问是什么原因呢。
+WARNING: Open MPI accepted a TCP connection from what appears to be a
+another Open MPI process but cannot find a corresponding process
+entry for that peer.
+
+额外增加参数-mca btl_tcp_if_include eno1就OK了
